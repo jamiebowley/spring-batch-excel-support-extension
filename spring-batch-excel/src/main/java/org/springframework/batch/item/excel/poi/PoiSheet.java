@@ -37,6 +37,7 @@ public class PoiSheet implements Sheet {
     private final org.apache.poi.ss.usermodel.Sheet delegate;
     private final int numberOfRows;
     private final String name;
+    public static final String CELL_ERROR = "#NA";
 
     private int numberOfColumns = -1;
     private FormulaEvaluator evaluator;
@@ -100,6 +101,9 @@ public class PoiSheet implements Sheet {
                     break;
                 case Cell.CELL_TYPE_FORMULA:
                     cells.add(getFormulaEvaluator().evaluate(cell).formatAsString());
+                    break;
+                case Cell.CELL_TYPE_ERROR :
+                    cells.add(CELL_ERROR);
                     break;
                 default:
                     throw new IllegalArgumentException("Cannot handle cells of type " + cell.getCellType());
